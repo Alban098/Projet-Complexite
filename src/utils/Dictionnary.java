@@ -7,7 +7,7 @@ import java.nio.file.Paths;
 import java.util.*;
 
 public class Dictionnary {
-    HashMap<String, List<String>> dictionnary;
+    Map<String, List<String>> dictionnary;
     SortedSet<String> preposition;
 
     public Dictionnary(String file) {
@@ -32,6 +32,16 @@ public class Dictionnary {
                 dictionnary.put(word, entry);
                 if (words[0].equals("(Preposition)"))
                     preposition.add(word);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        StringBuilder entry = new StringBuilder();
+        try (BufferedReader br = Files.newBufferedReader(Paths.get("verbes.json"))) {
+            String line = "";
+            while ((line = br.readLine()) != null) {
+                entry.append(line);
             }
         } catch (IOException e) {
             e.printStackTrace();

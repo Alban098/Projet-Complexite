@@ -1,59 +1,58 @@
-import utils.Dictionnary;
-import utils.Word;
-import utils.graph.Node;
-import utils.graph.WeightedGraph;
+import utils.*;
+import utils.graph.*;
 
+import javax.swing.*;
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.List;
 
-public class Test {
+public class Test extends JPanel {
 
-    public static void main(String[] args) {
+    private static int index = 0;
+
+    public static void main(String[] args) throws IOException {
+
         Dictionnary dictionnary = new Dictionnary("thes_fr.dat");
         WeightedGraph<Word> graph = new WeightedGraph<>();
 
         String text = getFormattedText("text.txt");
-        Map<Word, Integer> textWords = new HashMap<>();
-        String[] paragraphs = text.split("¶");
-        for (String paragraph : paragraphs) {
-            SortedSet<Word> paragraphWords = new TreeSet<>();
-            String[] sentences = paragraph.split("\\.( )*");
-            for (String sentence : sentences) {
-                String[] words = sentence.split(" ");
-                SortedSet<Word> sentenceWords = new TreeSet<>();
+
+        List<Word> textWords = new ArrayList<>();
+
+        String[] paragraphsArray = text.split("¶");
+
+        for (String paragraphString : paragraphsArray) {
+            Paragraph paragraph = new Paragraph();
+            String[] sentencesArray = paragraphString.split("\\.( )*");
+            for (String sentenceString : sentencesArray) {
+                String[] words = sentenceString.split(" ");
+                Sentence sentence = new Sentence();
                 for (String word : words) {
                     if (!dictionnary.isPreposition(word)) {
                         Word w = new Word(word);
-                        paragraphWords.add(w);
-                        sentenceWords.add(w);
-                        if (textWords.containsKey(w))
-                            textWords.replace(w, textWords.get(w) + 1);
+                        sentence.addWord(w);
+                        if (textWords.contains(w)) {
+                            Word inList = textWords.get(textWords.indexOf(w));
+                            inList.setValue(inList.getValue() + 1);
+                            w.setValue(inList.getValue());
+                        }
                         else
-                            textWords.put(w, 1);
-                        graph.add(new Word(word));
+                            textWords.add(w);
+                        graph.add(w);
                     }
                 }
-                for (Word w1 : sentenceWords) {
-                    for (Word w2 : sentenceWords) {
-                        if (!w1.equals(w2))
-                            graph.connect(w1, w2, 0.5f);
-                    }
-                }
-            }
-            for (Word w1 : paragraphWords) {
-                for (Word w2 : paragraphWords) {
-                    if (!w1.equals(w2))
-                        graph.connect(w1, w2, 0.05f);
-                }
+                sentence.connect(graph);
+                paragraph.addSentence(sentence);
             }
         }
-        for (Word word : textWords.keySet()) {
-            word.setValue(textWords.get(word));
-            System.out.println(word.getWord() + " : " + word.getValue());
-        }
+        List<Pair<Word>> best = graph.getStrongestConnection(3);
+        GraphRenderer renderer = new GraphRenderer(1920, 1080, "test.png", null);
+        float threshold = 1.5f;
+        renderer.renderGraphs(graph, threshold);
     }
 
     public static String getFormattedText(String file) {

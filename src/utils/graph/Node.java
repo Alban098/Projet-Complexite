@@ -20,6 +20,11 @@ public class Node<E> {
             neighbors.put(n, weight);
     }
 
+    public void disconnect(Node<E> n) {
+        neighbors.remove(n);
+        n.neighbors.remove(this);
+    }
+
     public void setValue(E value) {
         this.value = value;
     }
@@ -37,13 +42,5 @@ public class Node<E> {
         if (val == null)
             return 0;
         return val;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = value.hashCode();
-        for (Node<E> n : neighbors.keySet())
-            hash += n.value.hashCode();
-        return hash;
     }
 }
