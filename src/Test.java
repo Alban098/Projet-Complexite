@@ -2,7 +2,6 @@ import utils.*;
 import utils.graph.*;
 
 import javax.swing.*;
-import java.awt.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -12,17 +11,12 @@ import java.util.List;
 
 public class Test extends JPanel {
 
-    private static int index = 0;
 
-    public static void main(String[] args) throws IOException {
-
+    public static void main(String[] args) throws Exception {
         Dictionnary dictionnary = new Dictionnary("thes_fr.dat");
         WeightedGraph<Word> graph = new WeightedGraph<>();
-
         String text = getFormattedText("text.txt");
-
         List<Word> textWords = new ArrayList<>();
-
         String[] paragraphsArray = text.split("¶");
 
         for (String paragraphString : paragraphsArray) {
@@ -50,12 +44,13 @@ public class Test extends JPanel {
             }
         }
         List<Pair<Word>> best = graph.getStrongestConnection(3);
-        GraphRenderer renderer = new GraphRenderer(1920, 1080, "test.png", null);
-        float threshold = 1.5f;
-        renderer.renderGraphs(graph, threshold);
+        GraphRenderer renderer = GraphRenderer.initInstance(1920, 1080, "test5.png", "mask1080.png");
+        renderer.renderGraphs(graph, 1.5f, true);
+        Simulation simulation = new Simulation();
+        simulation.run();
     }
 
-    public static String getFormattedText(String file) {
+    private static String getFormattedText(String file) {
         StringBuilder text = new StringBuilder();
         try (BufferedReader br = Files.newBufferedReader(Paths.get(file))) {
             String line;

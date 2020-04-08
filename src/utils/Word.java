@@ -9,14 +9,14 @@ public class Word implements Comparable<Word>, Duplicable<Word> {
     private String word;
     private float value;
     private Point pos;
-    private Rectangle boundingBox;
+    private float boundingSphereRadius;
     private Font font;
     public boolean rendered = true;
 
     public Word(String word) {
         this.word = word;
         pos = new Point();
-        boundingBox = new Rectangle();
+        boundingSphereRadius = 1;
         value = 1;
         setFont(new Font("TimesRoman", Font.PLAIN, (int) (getValue() * 10)));
     }
@@ -45,12 +45,12 @@ public class Word implements Comparable<Word>, Duplicable<Word> {
         return pos;
     }
 
-    public Rectangle getBoundingBox() {
-        return boundingBox;
+    public float getBoundingSphereRadius() {
+        return boundingSphereRadius;
     }
 
-    public void setBoundingBox(Rectangle boundingBox) {
-        this.boundingBox = boundingBox;
+    public void setBoundingSphereRadius(float boundingSphereRadius) {
+        this.boundingSphereRadius = boundingSphereRadius;
     }
 
     public void setPos(Point pos) {
@@ -69,6 +69,7 @@ public class Word implements Comparable<Word>, Duplicable<Word> {
         return false;
     }
 
+
     @Override
     public int hashCode() {
         return word.hashCode();
@@ -84,7 +85,7 @@ public class Word implements Comparable<Word>, Duplicable<Word> {
         Word duplicate = new Word(word);
         duplicate.value = value;
         duplicate.pos = new Point(pos);
-        duplicate.boundingBox = new Rectangle(boundingBox);
+        duplicate.boundingSphereRadius = boundingSphereRadius;
         duplicate.font = font;
         return duplicate;
     }

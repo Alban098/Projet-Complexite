@@ -1,6 +1,6 @@
 package utils.graph;
 
-public class Triplet<E> {
+public class Triplet<E> implements Comparable<Triplet<E>>, Duplicable<Triplet<E>> {
 
     private E v1;
     private E v2;
@@ -34,5 +34,15 @@ public class Triplet<E> {
 
     public void setV3(E v3) {
         this.v3 = v3;
+    }
+
+    @Override
+    public int compareTo(Triplet triplet) {
+        return triplet.v1.equals(v1) && triplet.v2.equals(v2) && triplet.v3.equals(v3) ? 0 : 1;
+    }
+
+    @Override
+    public Triplet<E> duplicate() {
+        return new Triplet<E>(v1, v2, v3);
     }
 }
