@@ -9,6 +9,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
+/**
+ * Class which correspond to
+ */
 public class ColorGradient {
 
     BezierInterpolator interpolator;
@@ -19,18 +22,39 @@ public class ColorGradient {
         interpolator.addPoint(new Point(end).setWeight(w2), 1.0);
     }
 
+    /**
+     * method which add a color to
+     * @param color the color to add
+     * @param value of the point
+     * @param weight of the point
+     */
     public void addColor(Color color, double value, double weight) {
         interpolator.addPoint(new Point(color).setWeight(weight), value);
     }
 
+    /**
+     * method which remove a color from
+     * @param value
+     */
     public void removeColor(double value) {
         interpolator.removePoint(value);
     }
 
+    /**
+     * mathod to get a color from
+     * @param value
+     * @return the color to get
+     */
     public Color getColor(double value) {
         return interpolator.interpolate(Utils.clamp(value, 0.0, 1.0)).toColor();
     }
 
+    /**
+     * method to save
+     * @param width
+     * @param height
+     * @param file
+     */
     public void saveToFile(int width, int height, String file) {
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_4BYTE_ABGR);
         Graphics2D g = image.createGraphics();

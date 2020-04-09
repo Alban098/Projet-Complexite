@@ -3,6 +3,10 @@ package utils.graph;
 import java.util.*;
 import java.util.List;
 
+/**
+ * Class which represents
+ * @param <E>
+ */
 public class WeightedGraph<E extends Comparable<E> & Duplicable<E>> {
 
     Map<E, Node<E>> nodes;
@@ -14,6 +18,16 @@ public class WeightedGraph<E extends Comparable<E> & Duplicable<E>> {
         size = 0;
     }
 
+    public Node<E> getNode(E key) {
+        return nodes.get(key);
+    }
+
+    public List<Clique<E>> getCliques() {
+        if (cliques == null)
+            computeCliquesDecomp();
+        return cliques;
+    }
+
     public void add(E value) {
         if (nodes.containsKey(value)) {
             return;
@@ -21,10 +35,12 @@ public class WeightedGraph<E extends Comparable<E> & Duplicable<E>> {
         nodes.put(value, new Node<E>(value));
     }
 
-    public Node<E> getNode(E key) {
-        return nodes.get(key);
-    }
-
+    /**
+     *
+     * @param v1 first vertex of the connection
+     * @param v2 second vertex of the connection
+     * @param weight of the connection between vertices
+     */
     public void connect(E v1, E v2, float weight) {
         Node<E> n1, n2;
         if (nodes.containsKey(v1))
@@ -43,6 +59,12 @@ public class WeightedGraph<E extends Comparable<E> & Duplicable<E>> {
         n2.addNeighbor(n1, weight);
     }
 
+    /**
+     * method to get the weight of a connection
+     * @param v1 first vertex of the connection
+     * @param v2 second vertex of the connection
+     * @return the weight of the connection
+     */
     public float getConnectionWeight(E v1, E v2) {
         if (nodes.containsKey(v1) && nodes.containsKey(v2)) {
             return nodes.get(v1).getWeight(nodes.get(v2));
@@ -58,6 +80,11 @@ public class WeightedGraph<E extends Comparable<E> & Duplicable<E>> {
         return nodes.keySet();
     }
 
+    /**
+     * method
+     * @param n
+     * @return the strongest connection of
+     */
     public List<Pair<E>> getStrongestConnection(int n) {
         List<Pair<E>> list = new ArrayList<>();
         for (int i = 0; i < n; i++) {
@@ -81,6 +108,9 @@ public class WeightedGraph<E extends Comparable<E> & Duplicable<E>> {
         return list;
     }
 
+    /**
+     * method
+     */
     private void computeCliquesDecomp() {
         List<Clique<E>> cliques = new ArrayList<>();
         List<Clique<E>> maximalCliques = new ArrayList<>();
@@ -123,12 +153,11 @@ public class WeightedGraph<E extends Comparable<E> & Duplicable<E>> {
         this.cliques = maximalCliques;
     }
 
-    public List<Clique<E>> getCliques() {
-        if (cliques == null)
-            computeCliquesDecomp();
-        return cliques;
-    }
 
+    /**
+     * method
+     * @param threshold
+     */
     public void simplify(float threshold) {
         Map<E, Node<E>> newNodes = new HashMap<>();
         for (Map.Entry<E, Node<E>> node : nodes.entrySet()) {

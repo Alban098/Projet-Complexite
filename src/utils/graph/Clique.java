@@ -3,6 +3,10 @@ package utils.graph;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class which represents a clique
+ * @param <E>
+ */
 public class Clique<E extends Duplicable<E> & Comparable<E>> {
 
     List<E> nodes;
@@ -19,6 +23,11 @@ public class Clique<E extends Duplicable<E> & Comparable<E>> {
         return nodes.contains(val);
     }
 
+    /**
+     * method for determining whether the click contains the element
+     * @param clique for which we want to know if it contains the element
+     * @return true if the clique contains the element
+     */
     public boolean contains(Clique<E> clique) {
         for (E elem : clique.nodes)
             if (!nodes.contains(elem))
@@ -34,6 +43,11 @@ public class Clique<E extends Duplicable<E> & Comparable<E>> {
         return clique.nodes.size() == nodes.size() && contains(clique);
     }
 
+    /**
+     * method to
+     * @param graph
+     * @return
+     */
     public WeightedGraph<E> toGraph(WeightedGraph<E> graph) {
         WeightedGraph<E> cGraph = new WeightedGraph<>();
         for (E e : nodes) {

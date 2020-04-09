@@ -5,6 +5,10 @@ import utils.graph.WeightedGraph;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class which represents a sentence
+ * composed of words
+ */
 public class Sentence {
 
     List<Word> words;
@@ -17,12 +21,20 @@ public class Sentence {
         return words;
     }
 
+    /**
+     * method to add a word to a sentence
+     * @param word to add to
+     */
     public void addWord(Word word) {
         if (words.contains(word))
             return;
         words.add(word);
     }
 
+    /**
+     * method to connect to words
+     * @param graph in which to connect the worlds
+     */
     public void connect(WeightedGraph<Word> graph) {
         for (Word w1 : words) {
             for (Word w2 : words) {

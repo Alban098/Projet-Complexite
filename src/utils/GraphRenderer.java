@@ -13,6 +13,9 @@ import java.io.IOException;
 import java.util.*;
 import java.util.List;
 
+/**
+ * Class which represents
+ */
 public class GraphRenderer {
 
     private static final int NODE_RADIUS = 40;
@@ -98,6 +101,13 @@ public class GraphRenderer {
         return connections;
     }
 
+    /**
+     *
+     * @param graph
+     * @param threshold
+     * @param save
+     * @throws Exception
+     */
     public void renderGraphs(WeightedGraph<Word> graph, float threshold, boolean save) throws Exception {
         graph.simplify(threshold);
 
@@ -172,6 +182,12 @@ public class GraphRenderer {
             ImageIO.write(renderingTarget, "png", new File(file));
     }
 
+    /**
+     *
+     * @param g
+     * @param graph
+     * @param threshold
+     */
     private void drawGraph(Graphics2D g, WeightedGraph<Word> graph, float threshold) {
         Triplet<Integer> graphInfos = rendered.get(graph);
         int d = graphInfos.getV3();
@@ -216,6 +232,12 @@ public class GraphRenderer {
         textures.put(graph, img);
     }
 
+    /**
+     * method to initialise
+     * @param clique
+     * @param reference
+     * @return
+     */
     private boolean initClique(Clique<Word> clique, WeightedGraph<Word> reference) {
         WeightedGraph<Word> cGraph = clique.toGraph(reference);
         float initialAngle = 0;
@@ -267,6 +289,12 @@ public class GraphRenderer {
         return true;
     }
 
+    /**
+     * method to draw
+     * @param g
+     * @param word
+     * @param background
+     */
     private void drawCenteredString(Graphics g, Word word, Color background) {
         FontMetrics metrics = g.getFontMetrics(word.getFont());
         Rectangle rect = new Rectangle(word.getPos().x - metrics.stringWidth(word.getWord()) / 2, word.getPos().y - metrics.getHeight() / 2, metrics.stringWidth(word.getWord()), metrics.getHeight());

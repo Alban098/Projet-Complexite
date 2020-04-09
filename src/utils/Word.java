@@ -4,6 +4,9 @@ import utils.graph.Duplicable;
 
 import java.awt.*;
 
+/**
+ * Class which represents a word
+ */
 public class Word implements Comparable<Word>, Duplicable<Word> {
 
     private String word;
@@ -29,6 +32,8 @@ public class Word implements Comparable<Word>, Duplicable<Word> {
         this.font = font;
     }
 
+    public float getValue() { return value; }
+
     public void setValue(float value) {
         this.value = value;
     }
@@ -37,12 +42,12 @@ public class Word implements Comparable<Word>, Duplicable<Word> {
         return word;
     }
 
-    public float getValue() {
-        return value;
-    }
-
     public Point getPos() {
         return pos;
+    }
+
+    public void setPos(Point pos) {
+        this.pos = pos;
     }
 
     public float getBoundingSphereRadius() {
@@ -53,15 +58,21 @@ public class Word implements Comparable<Word>, Duplicable<Word> {
         this.boundingSphereRadius = boundingSphereRadius;
     }
 
-    public void setPos(Point pos) {
-        this.pos = pos;
-    }
-
+    /**
+     *
+     * @param o
+     * @return
+     */
     @Override
     public int compareTo(Word o) {
         return word.compareTo(o.word);
     }
 
+    /**
+     *
+     * @param obj
+     * @return
+     */
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof Word)
@@ -69,6 +80,19 @@ public class Word implements Comparable<Word>, Duplicable<Word> {
         return false;
     }
 
+    /**
+     *
+     * @return
+     */
+    @Override
+    public Word duplicate() {
+        Word duplicate = new Word(word);
+        duplicate.value = value;
+        duplicate.pos = new Point(pos);
+        duplicate.boundingSphereRadius = boundingSphereRadius;
+        duplicate.font = font;
+        return duplicate;
+    }
 
     @Override
     public int hashCode() {
@@ -80,13 +104,5 @@ public class Word implements Comparable<Word>, Duplicable<Word> {
         return word;
     }
 
-    @Override
-    public Word duplicate() {
-        Word duplicate = new Word(word);
-        duplicate.value = value;
-        duplicate.pos = new Point(pos);
-        duplicate.boundingSphereRadius = boundingSphereRadius;
-        duplicate.font = font;
-        return duplicate;
-    }
+
 }

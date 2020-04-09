@@ -6,6 +6,9 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 
+/**
+ * Class which represents
+ */
 public class Dictionnary {
     Map<String, List<String>> dictionnary;
     SortedSet<String> preposition;
@@ -14,6 +17,10 @@ public class Dictionnary {
         constructMaps(file);
     }
 
+    /**
+     * method to construct maps
+     * @param file
+     */
     private void constructMaps(String file) {
         dictionnary = new HashMap<>();
         preposition = new TreeSet<>();
@@ -48,11 +55,21 @@ public class Dictionnary {
         }
     }
 
-    public List<String> getSynonymes(String word) {
+    /**
+     * method to get a list of synonyms
+     * @param word to find synonym of
+     * @return
+     */
+    public List<String> getSynonyms(String word) {
         //TODO test gender and number
         return dictionnary.get(word);
     }
 
+    /**
+     * method to verify if the worl is a preposition or not
+     * @param word to verify if it is a preposition
+     * @return true if the world is a preposition
+     */
     public boolean isPreposition(String word) {
         //TODO test gender and number
         return preposition.contains(word);
