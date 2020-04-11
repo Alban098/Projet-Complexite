@@ -9,25 +9,38 @@ import java.util.List;
  */
 public class WeightedGraph<E extends Comparable<E> & Duplicable<E>> {
 
-    Map<E, Node<E>> nodes;
-    List<Clique<E>> cliques;
-    int size;
+    private Map<E, Node<E>> nodes;
+    private List<Clique<E>> cliques;
+    private int size;
 
     public WeightedGraph() {
         nodes = new TreeMap<>();
         size = 0;
     }
 
+    /**
+     * Get the node with a specified value
+     * @param key the value to get
+     * @return the node with value key, null if not found
+     */
     public Node<E> getNode(E key) {
         return nodes.get(key);
     }
 
+    /**
+     * Return the list of cliques of the graph
+     * @return a list of the maximal cliques
+     */
     public List<Clique<E>> getCliques() {
         if (cliques == null)
             computeCliquesDecomp();
         return cliques;
     }
 
+    /**
+     * Add a new node to the graph
+     * @param value the value to add to the graph
+     */
     public void add(E value) {
         if (nodes.containsKey(value)) {
             return;
@@ -36,7 +49,7 @@ public class WeightedGraph<E extends Comparable<E> & Duplicable<E>> {
     }
 
     /**
-     *
+     * Connect two value
      * @param v1 first vertex of the connection
      * @param v2 second vertex of the connection
      * @param weight of the connection between vertices
@@ -72,18 +85,26 @@ public class WeightedGraph<E extends Comparable<E> & Duplicable<E>> {
         return 0;
     }
 
+    /**
+     * Return the size of the graph
+     * @return the size of the graph
+     */
     public int size() {
         return nodes.size();
     }
 
+    /**
+     * Return a set of the graph's nodes
+     * @return a set of the graph's nodes
+     */
     public Set<E> getSet() {
         return nodes.keySet();
     }
 
     /**
-     * method
-     * @param n
-     * @return the strongest connection of
+     * Return the n strongest connection of the graph
+     * @param n number of connection to get
+     * @return the strongest connection of the graph
      */
     public List<Pair<E>> getStrongestConnection(int n) {
         List<Pair<E>> list = new ArrayList<>();
@@ -109,7 +130,8 @@ public class WeightedGraph<E extends Comparable<E> & Duplicable<E>> {
     }
 
     /**
-     * method
+     * Compute a list a cliques representing
+     * The list only contains maximal cliques
      */
     private void computeCliquesDecomp() {
         List<Clique<E>> cliques = new ArrayList<>();
@@ -155,8 +177,8 @@ public class WeightedGraph<E extends Comparable<E> & Duplicable<E>> {
 
 
     /**
-     * method
-     * @param threshold
+     * Simplify the graph by removing the links with a weight smaller than a threshold
+     * @param threshold the threshold value
      */
     public void simplify(float threshold) {
         Map<E, Node<E>> newNodes = new HashMap<>();

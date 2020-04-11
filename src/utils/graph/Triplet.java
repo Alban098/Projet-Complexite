@@ -40,11 +40,7 @@ public class Triplet<E> implements Comparable<Triplet<E>>, Duplicable<Triplet<E>
         this.v3 = v3;
     }
 
-    /**
-     * method which compare
-     * @param triplet
-     * @return
-     */
+
     @Override
     public int compareTo(Triplet triplet) {
         return triplet.v1.equals(v1) && triplet.v2.equals(v2) && triplet.v3.equals(v3) ? 0 : 1;

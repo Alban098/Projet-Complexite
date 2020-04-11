@@ -1,27 +1,3 @@
-/*
- * Copyright (c) 2010-2016 William Bittle  http://www.dyn4j.org/
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without modification, are permitted
- * provided that the following conditions are met:
- *
- *   * Redistributions of source code must retain the above copyright notice, this list of conditions
- *     and the following disclaimer.
- *   * Redistributions in binary form must reproduce the above copyright notice, this list of conditions
- *     and the following disclaimer in the documentation and/or other materials provided with the
- *     distribution.
- *   * Neither the name of dyn4j nor the names of its contributors may be used to endorse or
- *     promote products derived from this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
- * FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
- * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
- * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
- * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
- * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -39,12 +15,14 @@ import org.dyn4j.dynamics.World;
 import org.dyn4j.dynamics.joint.Joint;
 import org.dyn4j.dynamics.joint.RopeJoint;
 import org.dyn4j.geometry.*;
+import utils.ColorGradient;
 import utils.GraphRenderer;
 import utils.Word;
 import utils.graph.WeightedGraph;
 
 
 public final class Simulation extends SimulationFrame {
+
     /** The serial version id */
     private static final long serialVersionUID = -8518496343422955267L;
     private static final int DRAG = 1;
@@ -77,6 +55,9 @@ public final class Simulation extends SimulationFrame {
         joinGradient.addColor(Color.YELLOW, 0.5, 1.0);
     }
 
+    /**
+     * Initialize the simulation
+     */
     @Override
     protected void initializeWorld() {
         this.world.setGravity(World.ZERO_GRAVITY);
@@ -151,6 +132,11 @@ public final class Simulation extends SimulationFrame {
         System.out.println(min + " " + max);
     }
 
+    /**
+     * Render the scene to the canvas
+     * @param g the graphics object to render to
+     * @param elapsedTime the elapsed time from the last update
+     */
     protected void render(Graphics2D g, double elapsedTime) {
         for (Joint joint : world.getJoints()) {
             if (joint instanceof RopeJoint) {
@@ -194,7 +180,11 @@ public final class Simulation extends SimulationFrame {
         }
     }
 
-
+    /**
+     * Update the scene
+     * @param g the graphics object to render to
+     * @param elapsedTime the elapsed time from the last update
+     */
     @Override
     protected void update(Graphics2D g, double elapsedTime) {
         super.update(g, elapsedTime);

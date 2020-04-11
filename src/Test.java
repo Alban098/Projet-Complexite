@@ -50,6 +50,11 @@ public class Test extends JPanel {
         simulation.run();
     }
 
+    /**
+     * Remove unwanted characters from the text
+     * @param file the input text file
+     * @return the file as a long string
+     */
     private static String getFormattedText(String file) {
         StringBuilder text = new StringBuilder();
         try (BufferedReader br = Files.newBufferedReader(Paths.get(file))) {

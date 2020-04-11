@@ -3,6 +3,7 @@ package utils;
 import utils.graph.Duplicable;
 
 import java.awt.*;
+import java.awt.Point;
 
 /**
  * Class which represents a word
@@ -58,21 +59,11 @@ public class Word implements Comparable<Word>, Duplicable<Word> {
         this.boundingSphereRadius = boundingSphereRadius;
     }
 
-    /**
-     *
-     * @param o
-     * @return
-     */
     @Override
     public int compareTo(Word o) {
         return word.compareTo(o.word);
     }
 
-    /**
-     *
-     * @param obj
-     * @return
-     */
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof Word)
@@ -81,8 +72,8 @@ public class Word implements Comparable<Word>, Duplicable<Word> {
     }
 
     /**
-     *
-     * @return
+     * Return a copy of the current word
+     * @return a copy of word
      */
     @Override
     public Word duplicate() {

@@ -7,6 +7,7 @@ import utils.graph.WeightedGraph;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -102,11 +103,11 @@ public class GraphRenderer {
     }
 
     /**
-     *
-     * @param graph
-     * @param threshold
-     * @param save
-     * @throws Exception
+     * Render a graph and compute the cliques' images
+     * @param graph the graph to render
+     * @param threshold the threshold value used to simplify the graph
+     * @param save need to save the graph to an image
+     * @throws Exception if no valid configuration has been found
      */
     public void renderGraphs(WeightedGraph<Word> graph, float threshold, boolean save) throws Exception {
         graph.simplify(threshold);
@@ -183,10 +184,10 @@ public class GraphRenderer {
     }
 
     /**
-     *
-     * @param g
-     * @param graph
-     * @param threshold
+     * Draw a graph to the rendering target
+     * @param g the graphic to draw to
+     * @param graph the graph to draw
+     * @param threshold the threshold value
      */
     private void drawGraph(Graphics2D g, WeightedGraph<Word> graph, float threshold) {
         Triplet<Integer> graphInfos = rendered.get(graph);
@@ -233,10 +234,10 @@ public class GraphRenderer {
     }
 
     /**
-     * method to initialise
-     * @param clique
-     * @param reference
-     * @return
+     * method to initialise a clique inside the rendering target
+     * @param clique the clique to compute
+     * @param reference the reference graph
+     * @return Has the computation been successful
      */
     private boolean initClique(Clique<Word> clique, WeightedGraph<Word> reference) {
         WeightedGraph<Word> cGraph = clique.toGraph(reference);
@@ -290,10 +291,10 @@ public class GraphRenderer {
     }
 
     /**
-     * method to draw
-     * @param g
-     * @param word
-     * @param background
+     * Draw a word centered inside its bounding area
+     * @param g the graphic to draw to
+     * @param word the word to draw
+     * @param background the background color
      */
     private void drawCenteredString(Graphics g, Word word, Color background) {
         FontMetrics metrics = g.getFontMetrics(word.getFont());

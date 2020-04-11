@@ -17,22 +17,34 @@ public class Node<E> {
         neighbors = new HashMap<>();
     }
 
+    /**
+     * Set the value of the node
+     * @param value the new node's value
+     */
     public void setValue(E value) {
         this.value = value;
     }
 
+    /**
+     * Return the value of the node
+     * @return the node's value
+     */
     public E getValue() {
         return value;
     }
 
+    /**
+     * Get the neighbors of the node
+     * @return a map of neighbors and link weight
+     */
     public Map<Node<E>, Float> getNeighbors() {
         return neighbors;
     }
 
     /**
-     * method to get the weight of a node
+     * method to get the weight of a link between this node and another
      * @param node for which to get the weight
-     * @return the weight of the node
+     * @return the weight of the link
      */
     public float getWeight(Node<E> node) {
         Float val = neighbors.get(node);
@@ -44,7 +56,7 @@ public class Node<E> {
     /**
      * method to add a neighbors to an element
      * @param n the node to add to
-     * @param weight of the node
+     * @param weight of the link
      */
     public void addNeighbor(Node<E> n, float weight) {
         if (neighbors.containsKey(n))

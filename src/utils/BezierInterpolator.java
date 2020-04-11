@@ -1,11 +1,13 @@
-package framework;
-
-import utils.Utils;
+package utils;
 
 import java.awt.*;
 import java.util.*;
 import java.util.List;
 
+/**
+ * Class representing a collection of Cubic bezier curve passing trough a set of points
+ * The final curve is continuous and derivable
+ */
 class BezierInterpolator {
 
     private Map<Double, Point> anchorPoints;
@@ -16,6 +18,11 @@ class BezierInterpolator {
         anchorPoints = new TreeMap<>();
     }
 
+    /**
+     * Return a value along the curve
+     * @param value a value between 0 and 1
+     * @return the interpolated value
+     */
     Point interpolate(double value) {
         if (anchorPoints.size() <= 1)
             throw new IllegalStateException("Not enough points to interpolate : " + anchorPoints.size() + " < 2");
@@ -42,16 +49,27 @@ class BezierInterpolator {
         return cubicBezier(controlPoints.get(lowerIndex), controlPoints.get(lowerIndex + 1), controlPoints.get(lowerIndex + 2), controlPoints.get(lowerIndex + 3), intervalPercent);
     }
 
+    /**
+     * Add a point along the curves and recompute the entire curve
+     * @param point the point to add
+     * @param value where to place it along the curve
+     */
     void addPoint(Point point, double value) {
         anchorPoints.put(value, point);
         computeControlPoints();
     }
 
+    /**
+     * Remove a point along the curve if it exist as a control points
+     * @param value
+     */
     void removePoint(double value) {
         anchorPoints.remove(value);
     }
 
-
+    /**
+     * Compute the intermediate control points to ensure the continuity and differentiability of the curve
+     */
     private void computeControlPoints() {
         controlPoints.clear();
         for (Point p : anchorPoints.values())
@@ -100,12 +118,29 @@ class BezierInterpolator {
         }
     }
 
+    /**
+     * Compute a point along a quadratic Bezier curve defined by 3 points
+     * @param p0 the first control point
+     * @param p1 the second control point
+     * @param p2 the third control point
+     * @param alpha a value between 0 and 1 representing the advancement along the curve
+     * @return the interpolated point
+     */
     private Point quadraticBezier(Point p0, Point p1, Point p2, double alpha) {
         Point p01 = Point.add(p0, Point.sub(p1, p0).mult(alpha));
         Point p12 = Point.add(p1, Point.sub(p2, p1).mult(alpha));
         return Point.add(p01, Point.sub(p12, p01).mult(alpha));
     }
 
+    /**
+     * Compute a point along a cubic Bezier curve defined by 3 points
+     * @param p0 the first control point
+     * @param p1 the second control point
+     * @param p2 the third control point
+     * @param p3 the fourth control point
+     * @param alpha a value between 0 and 1 representing the advancement along the curve
+     * @return the interpolated point
+     */
     private Point cubicBezier(Point p0, Point p1, Point p2, Point p3, double alpha) {
         Point p01 = Point.add(p0, Point.sub(p1, p0).mult(alpha));
         Point p12 = Point.add(p1, Point.sub(p2, p1).mult(alpha));
@@ -151,6 +186,10 @@ class Point {
         this.weight = p.weight;
     }
 
+    /**
+     * Create a color from the point
+     * @return a Color characterized by the point
+     */
     Color toColor() {
         int r = Utils.clamp((int) x, 0, 255);
         int g = Utils.clamp((int) y, 0, 255);
@@ -158,16 +197,29 @@ class Point {
         return new Color(r, g, b);
     }
 
+    /**
+     * Return the magnitude of the point as if it was a vector
+     * @return the magnitude a the point
+     */
     double mag() {
         return Math.sqrt(x*x + y*y + z*z);
     }
 
+    /**
+     * Return a normalized vector of the same direction
+     * @return a normalized vector
+     */
     Point normalized() {
         if (mag() == 0)
             return new Point(0, 0, 0);
         return new Point(x/mag(), y/mag(), z/mag());
     }
 
+    /**
+     * Scale a vector by a scalar
+     * @param a the scale factor
+     * @return the scaled vector, actually the instance
+     */
     Point mult(double a) {
         x*=a;
         y*=a;
@@ -175,22 +227,53 @@ class Point {
         return this;
     }
 
+    /**
+     * Return the relative vector between p1 and p2
+     * @param p1 the first point
+     * @param p2 the second point
+     * @return the relative vector between p1 and p2
+     */
     static Point relative(Point p1, Point p2) {
         return new Point(p2.x - p1.x, p2.y - p1.y, p2.z - p1.z);
     }
 
+    /**
+     * Return the addition of p1 and p2
+     * @param p1 the first point
+     * @param p2 the second point
+     * @return a point p1 + p2
+     */
     static Point add(Point p1, Point p2) {
         return new Point(p2.x + p1.x, p2.y + p1.y, p2.z + p1.z);
     }
 
+    /**
+     * Return the difference between p1 and p2
+     * @param p1 the first point
+     * @param p2 the second point
+     * @return a point p1 - p2
+     */
     static Point sub(Point p1, Point p2) {
         return new Point(p1.x - p2.x, p1.y - p2.y, p1.z - p2.z);
     }
 
+    /**
+     * Return the middle point between two other points
+     * @param p1 the first point
+     * @param p2 the second point
+     * @return the midpoint between p1 and p2
+     */
     static Point midPoint(Point p1, Point p2) {
         return new Point((p2.x + p1.x)/2, (p2.y + p1.y)/2, (p2.z + p1.z)/2);
     }
 
+    /**
+     * Return the value of an angle formed by 3 points in radians
+     * @param p0 the first Point
+     * @param p1 the second Point
+     * @param p2 the third Point
+     * @return the angle formed by 3 points
+     */
     static double angle(Point p0, Point p1, Point p2) {
         Point v0 = relative(p1, p0).normalized();
         Point v1 = relative(p1, p2).normalized();
@@ -198,6 +281,13 @@ class Point {
         return Math.acos(dot);
     }
 
+    /**
+     * Compute a point representing the direction of the bisector of an angle represented by 3 point
+     * @param p0 the first Point
+     * @param p1 the second Point
+     * @param p2 the third Point
+     * @return A Point representing the direction of the bisector
+     */
     static Point bisector(Point p0, Point p1, Point p2) {
         Point v0 = relative(p1, p0);
         Point v1 = relative(p1, p2);
@@ -205,6 +295,12 @@ class Point {
         return add(p1, bis);
     }
 
+    /**
+     * Return the cross product between two points representing vectors
+     * @param p0 the first point
+     * @param p1 the second point
+     * @return the cross product of the two points
+     */
     static Point product(Point p0, Point p1) {
         double x = p0.y*p1.z - p0.z*p1.y;
         double y = p0.z*p1.x - p0.x*p1.z;

@@ -1,16 +1,13 @@
-package framework;
-
-import utils.Utils;
+package utils;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
 
 /**
- * Class which correspond to
+ * Class which correspond a continuous gradient passing trough a set of color
  */
 public class ColorGradient {
 
@@ -23,9 +20,9 @@ public class ColorGradient {
     }
 
     /**
-     * method which add a color to
+     * method which add a color to the current gradient
      * @param color the color to add
-     * @param value of the point
+     * @param value of the point along the gradient (between 0 and 1)
      * @param weight of the point
      */
     public void addColor(Color color, double value, double weight) {
@@ -33,16 +30,16 @@ public class ColorGradient {
     }
 
     /**
-     * method which remove a color from
-     * @param value
+     * method which remove a color from the gradient is it exist as an anchor
+     * @param value the value along the gradient (between 0 and 1)
      */
     public void removeColor(double value) {
         interpolator.removePoint(value);
     }
 
     /**
-     * mathod to get a color from
-     * @param value
+     * method to get a color from the gradient
+     * @param value the value along the gradient (between 0 and 1)
      * @return the color to get
      */
     public Color getColor(double value) {
@@ -50,10 +47,10 @@ public class ColorGradient {
     }
 
     /**
-     * method to save
-     * @param width
-     * @param height
-     * @param file
+     * method to save the gradient as a .png file
+     * @param width the width of the image
+     * @param height the height of the image
+     * @param file the name of the file
      */
     public void saveToFile(int width, int height, String file) {
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_4BYTE_ABGR);

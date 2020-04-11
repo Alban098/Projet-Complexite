@@ -23,7 +23,7 @@ public class Sentence {
 
     /**
      * method to add a word to a sentence
-     * @param word to add to
+     * @param word to add to the sentence
      */
     public void addWord(Word word) {
         if (words.contains(word))
@@ -33,7 +33,7 @@ public class Sentence {
 
     /**
      * method to connect to words
-     * @param graph in which to connect the worlds
+     * @param graph in which to connect the words
      */
     public void connect(WeightedGraph<Word> graph) {
         for (Word w1 : words) {

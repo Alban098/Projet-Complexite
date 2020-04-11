@@ -21,7 +21,7 @@ public class Paragraph {
 
     /**
      * method to add a sentence to a paragraph
-     * @param sentence to add to
+     * @param sentence to add to the paragraph
      */
     public void addSentence(Sentence sentence) {
         sentences.add(sentence);

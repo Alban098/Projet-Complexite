@@ -30,11 +30,6 @@ public class Pair<E> {
         this.v2 = v2;
     }
 
-    /**
-     * method
-     * @param obj
-     * @return
-     */
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof Pair) {

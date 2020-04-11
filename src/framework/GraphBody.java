@@ -21,17 +21,6 @@ public class GraphBody extends SimulationBody {
 
     public int hash;
 
-    /* (non-Javadoc)
-     * @see org.dyn4j.samples.SimulationBody#renderFixture(java.awt.Graphics2D, double, org.dyn4j.dynamics.BodyFixture, java.awt.Color)
-     */
-
-    /**
-     * method to
-     * @param g the graphics object to render to
-     * @param scale the scaling factor
-     * @param fixture the fixture to render
-     * @param color the color to render the fixture
-     */
     @Override
     protected void renderFixture(Graphics2D g, double scale, BodyFixture fixture, Color color) {
         // do we need to render an image?

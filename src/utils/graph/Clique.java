@@ -15,18 +15,27 @@ public class Clique<E extends Duplicable<E> & Comparable<E>> {
         nodes = new ArrayList<>();
     }
 
+    /**
+     * Add a new Node to the graph
+     * @param val the node to add
+     */
     public void add(E val) {
         nodes.add(val);
     }
 
+    /**
+     * Return whether or not the graph contains a value
+     * @param val the value to test
+     * @return does the graph contains val
+     */
     public boolean contains(E val) {
         return nodes.contains(val);
     }
 
     /**
-     * method for determining whether the click contains the element
-     * @param clique for which we want to know if it contains the element
-     * @return true if the clique contains the element
+     * method for determining whether the graph contains another graph or not
+     * @param clique the graph to test if contained
+     * @return true if the passed graph is a subgraph of the current one
      */
     public boolean contains(Clique<E> clique) {
         for (E elem : clique.nodes)
@@ -35,6 +44,10 @@ public class Clique<E extends Duplicable<E> & Comparable<E>> {
         return true;
     }
 
+    /**
+     * Return the number of node of the clique
+     * @return the size of the clique
+     */
     public int size() {
         return nodes.size();
     }
@@ -44,9 +57,9 @@ public class Clique<E extends Duplicable<E> & Comparable<E>> {
     }
 
     /**
-     * method to
-     * @param graph
-     * @return
+     * method to convert the clique to a WeightedGraph
+     * @param graph the graph from which to get the links' weights
+     * @return a graph representing the clique
      */
     public WeightedGraph<E> toGraph(WeightedGraph<E> graph) {
         WeightedGraph<E> cGraph = new WeightedGraph<>();

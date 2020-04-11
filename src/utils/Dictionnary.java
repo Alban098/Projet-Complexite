@@ -19,7 +19,7 @@ public class Dictionnary {
 
     /**
      * method to construct maps
-     * @param file
+     * @param file the filename of the dictionary
      */
     private void constructMaps(String file) {
         dictionnary = new HashMap<>();
@@ -56,22 +56,20 @@ public class Dictionnary {
     }
 
     /**
-     * method to get a list of synonyms
+     * method to get a list of synonyms of a word
      * @param word to find synonym of
-     * @return
+     * @return a list of synonyms of word
      */
     public List<String> getSynonyms(String word) {
-        //TODO test gender and number
         return dictionnary.get(word);
     }
 
     /**
-     * method to verify if the worl is a preposition or not
+     * method to verify if the word is a preposition or not
      * @param word to verify if it is a preposition
      * @return true if the world is a preposition
      */
     public boolean isPreposition(String word) {
-        //TODO test gender and number
         return preposition.contains(word);
     }
 }
