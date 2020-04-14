@@ -11,11 +11,15 @@ import java.util.List;
 
 public class Test extends JPanel {
 
+    public static final String TEXT_FILE = "text.txt";
+    public static final String GRAPH_FILE = "rendered.png";
+    public static final String MASK_FILE = "mask1080.png";
+    public static final float THRESHOLD = 1.5f;
 
     public static void main(String[] args) throws Exception {
         Dictionnary dictionnary = new Dictionnary("thes_fr.dat");
         WeightedGraph<Word> graph = new WeightedGraph<>();
-        String text = getFormattedText("text.txt");
+        String text = getFormattedText(TEXT_FILE);
         List<Word> textWords = new ArrayList<>();
         String[] paragraphsArray = text.split("¶");
 
@@ -44,8 +48,8 @@ public class Test extends JPanel {
             }
         }
         List<Pair<Word>> best = graph.getStrongestConnection(3);
-        GraphRenderer renderer = GraphRenderer.initInstance(1920, 1080, "test5.png", "mask1080.png");
-        renderer.renderGraphs(graph, 1.5f, true);
+        GraphRenderer renderer = GraphRenderer.initInstance(1920, 1080, GRAPH_FILE, MASK_FILE);
+        renderer.renderGraphs(graph, THRESHOLD, true);
         Simulation simulation = new Simulation();
         simulation.run();
     }
